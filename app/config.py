@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Optional
 from dotenv import load_dotenv
 import os
 import urllib.parse
@@ -11,23 +12,49 @@ class Settings(BaseSettings):
     """
 
     # API Keys
-    PINECONE_API_KEY: str | None = None
+    LANCEDB_API_KEY: str | None = None
     COHERE_API_KEY: str | None = None
     GOOGLE_API_KEY: str | None = None
     LANGCHAIN_API_KEY: str | None = None
+    OPENAI_API_KEY: str | None = None
+    LLM_API_KEY: str | None = None
 
     # LangSmith / LangChain
     LANGSMITH_TRACING: bool = True
     LANGCHAIN_PROJECT: str = "learnaly-tica"
     LANGCHAIN_ENDPOINT: str = "https://api.smith.langchain.com"
 
-    # Pinecone Vector DB
-    PINECONE_VECTOR_DB: str = "LearnalyTica"
+    # Vector DB
+    LANCE_VECTOR_DB: str = "learnalytica"
+    DATABASE_URL: Optional[str] = "sqlite:///./cognee_memory.db"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     # Agent Endpoint
-    AGENT_PENGUKURAN_ENDPOINT: str | None = None
+    AGENT_LEARNING_INSIGHT_ENDPOINT: str = "http://localhost:4040"
+    AGENT_DATA_ANALYST_ENDPOINT: str = "http://localhost:4041"
+    AGENT_REFLEXION_ENDPOINT: str = "http://localhost:4042"
+
+    # ==================== Cognee Settings ====================
+    COGNEE_MEMORY_MAX_SIZE: int = 100  # Max reflections per user
+    COGNEE_CACHE_EXPIRY_HOURS: int = 24  # Cache expiry untuk query
+    
+    # ==================== Reflexion Settings ====================
+    REFLEXION_MAX_ITERATIONS: int = 2  # Max self-critique iterations
+    REFLEXION_MIN_QUALITY_SCORE: float = 8.0  # Min score untuk accept response (raised untuk higher quality)
+    
+    # ==================== Agent Settings ====================
+    AGENT_TEMPERATURE: float = 0.3
+    AGENT_MAX_TOKENS: int = 2000
+    AGENT_TIMEOUT_SECONDS: int = 30
+
+    # ==================== Logging ====================
+    LOG_LEVEL: str = "INFO"
+    LOG_FILE: Optional[str] = "ai_learning_insight.log"
+    
+    # ==================== Rate Limiting ====================
+    RATE_LIMIT_CALLS: int = 10  # Max calls per time window
+    RATE_LIMIT_WINDOW_SECONDS: int = 60
 
 settings = Settings()
 
@@ -61,7 +88,4 @@ class DatabaseConfig:
             'port': cls.PORT
         }
 
-class PineconeConfig:
-    """Pinecone configuration"""
-    API_KEY = os.getenv("PINECONE_API_KEY")
-    VECTOR_DIMENSION = int(os.getenv("PINECONE_DIMENSION", 1536))
+__all__ = ['settings']

@@ -1,0 +1,72 @@
+name: SpaceShip Titanic Preprocessing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Conda environment from conda.yaml
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: "3.12.7"
+          environment-file: labs/preprocessing/conda.yaml
+          activate-environment: mlflow-env
+
+      - name: Run MLflow project
+        shell: bash -l {0}
+        env:
+          DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_USER_TOKEN }}
+          DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+          MLFLOW_TRACKING_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_USER_TOKEN }}
+        run: |
+          cd labs/preprocessing
+          mlflow run . \
+            --env-manager=local
+
+      - name: List mlruns directory
+        working-directory: ./labs/preprocessing
+        run: |
+          ls -R mlruns
+
+      - name: Get latest MLflow run_id
+        id: get_run_id
+        working-directory: ./labs/preprocessing
+        run: |
+          RUN_ID=$(ls -td mlruns/*/*/ | head -n 1 | cut -d'/' -f3)
+          if [ -z "$RUN_ID" ]; then
+            echo "Error: Tidak dapat menemukan MLflow run ID."
+            exit 1
+          fi
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          echo "Run ID ditemukan: $RUN_ID"
+      
+      - name: Download All MLflow Artifacts
+        working-directory: ./labs/preprocessing
+        shell: bash -l {0}
+        run: |
+          mkdir -p artifacts
+          mlflow artifacts download --run-id ${{ env.RUN_ID }} -d ./artifacts
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and Push Single Docker Image
+        working-directory: ./labs/preprocessing
+        run: |
+          docker build -t learnalytica_preprocessor .
+          docker tag learnalytica_preprocessor ${{ secrets.DOCKER_HUB_USERNAME }}/learnalytica_preprocessor:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/learnalytica_preprocessor:latest

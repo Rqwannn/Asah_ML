@@ -11,7 +11,7 @@ import os
 from utils.logger import logger
 from utils.assistant.schema import StreamAgentSchema
 from utils.assistant.connection_manager import manager
-from utils.assistant.agent_client.agent_client_1 import execute
+from utils.assistant.agent_client.agent_client import execute
 
 class AgentService:
     def __init__(self):
@@ -95,7 +95,7 @@ class AgentService:
         try:
             await manager.send_message({
                 "type": "thinking",
-                "output": "💭 Sedang berpikir...",
+                "output": "Sedang berpikir...",
                 "timestamp": datetime.now().isoformat()
             }, user_id)
             
