@@ -5,3 +5,6 @@ __pycache__/
 Research
 checkpoints
 note.txt
+
+assets/df_big_clean.csv
+assets/learnalytica_label.csv
