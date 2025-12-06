@@ -1,7 +1,7 @@
 from typing import Optional, Dict, Any
 
 
-def json_response(status: str, code: int, message: str, extended_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def json_response(status: str, code: int, extended_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """
     Success response generator.
 
@@ -11,7 +11,6 @@ def json_response(status: str, code: int, message: str, extended_data: Optional[
     """
     data = {
         "STATUS": status,
-        "MESSAGE": message,
         "CODE": code,
     }
 
@@ -21,7 +20,7 @@ def json_response(status: str, code: int, message: str, extended_data: Optional[
     return data
 
 
-def fail_response(status: str, code: int, message: str, err: Optional[str] = "") -> Dict[str, Any]:
+def fail_response(status: str, code: int, err: Optional[str] = "") -> Dict[str, Any]:
     """
     Failure response generator.
 
@@ -31,7 +30,6 @@ def fail_response(status: str, code: int, message: str, err: Optional[str] = "")
     """
     data = {
         "STATUS": status,
-        "MESSAGE": message,
         "CODE": code,
     }
 

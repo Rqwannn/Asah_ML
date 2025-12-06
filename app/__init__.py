@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from routes.routes import router
+from routes.api_router import router
 from dotenv import load_dotenv
 import os
 
@@ -12,7 +12,7 @@ async def lifespan(app: FastAPI):
     load_dotenv()
 
     os.environ['GOOGLE_API_KEY']
-    os.environ['PINECONE_API_KEY']
+    os.environ['LANCEDB_API_KEY']
     os.environ['COHERE_API_KEY']
 
     os.environ["LANGSMITH_TRACING"]

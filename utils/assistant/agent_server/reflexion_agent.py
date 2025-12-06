@@ -1,5 +1,3 @@
-# Agent Server - Advanced Implementation dengan Cognee, Reflexion, dan ACP
-
 from collections.abc import AsyncGenerator
 import json
 import os

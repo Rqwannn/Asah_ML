@@ -2,7 +2,6 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from routes.api_router import router
 from datetime import datetime
 import asyncio
 import json
@@ -22,7 +21,7 @@ async def lifespan(app: FastAPI):
     load_dotenv()
 
     os.environ['GOOGLE_API_KEY'] = settings.GOOGLE_API_KEY
-    os.environ['PINECONE_API_KEY']
+    os.environ['LANCEDB_API_KEY']
     os.environ['COHERE_API_KEY']
 
     os.environ["LANGSMITH_TRACING"]
@@ -46,8 +45,6 @@ ai_apps.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-ai_apps.include_router(router, tags=["agent"])
 
 @ai_apps.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):

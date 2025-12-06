@@ -23,7 +23,7 @@ class AgentService:
         self.word_queue: asyncio.Queue[str] = asyncio.Queue()
 
         self.gemini_api_key = os.environ['GOOGLE_API_KEY']
-        self.pinecone_api_key = os.environ['PINECONE_API_KEY']
+        self.lance_api_key = os.environ['LLM_API_KEY']
         self.cohere_api_key = os.environ['COHERE_API_KEY']
 
     def _serialize_chat_history(self, chat_history: List[Any]) -> List[Dict[str, Any]]:

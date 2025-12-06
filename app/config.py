@@ -88,4 +88,19 @@ class DatabaseConfig:
             'port': cls.PORT
         }
 
+class LanceDBConfig:
+    """LanceDB Cloud configuration - All data stored here"""
+    URI = os.getenv("LANCEDB_URI", "db://learnalytica-txf2rg")
+    API_KEY = os.getenv("LANCEDB_API_KEY", "")
+    REGION = os.getenv("LANCEDB_REGION", "us-east-1")
+    DEFAULT_TABLE = os.getenv("LANCEDB_DEFAULT_TABLE", "learnalytica-academy")
+    
+    @classmethod
+    def validate(cls):
+        """Validate required configuration"""
+        if not cls.API_KEY:
+            raise ValueError("LANCEDB_API_KEY must be set in environment")
+        if not cls.URI:
+            raise ValueError("LANCEDB_URI must be set in environment")
+
 __all__ = ['settings']

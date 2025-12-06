@@ -21,10 +21,10 @@ async def stream_measurement_analysis(
     try:
         result = await ClassificationService().analysis(params)
 
-        final_response = json_response("CREAD_ACTION", 
+        final_response = json_response("CREAD_ACTION", 201,
                             {
                                 "status": 201,
-                                "message": "Berhasil melakukan analisis ukuran baju",
+                                "message": "Berhasil melakukan analisis tingkat pembelajaran pengguna",
                                 "result": result,
                             }
                         ), 201
