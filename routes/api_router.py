@@ -14,8 +14,8 @@ from utils.schema import ClassificationFeatures
 
 router = APIRouter(prefix="/api")
 
-@router.post("/measurement_analysis", status_code=HTTPStatus.CREATED)
-async def stream_measurement_analysis(
+@router.post("/learning_analysis", status_code=HTTPStatus.CREATED)
+async def stream_learning_analysis(
     params: ClassificationFeatures = Body(...)
 ):
     try:
