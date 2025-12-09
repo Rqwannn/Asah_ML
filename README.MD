@@ -6,6 +6,14 @@
 python -m utils.assistant.agent_server.learning_insight_agent
 ```
 
+```bash
+python -m utils.assistant.agent_server.data_analyst_agent
+```
+
+```bash
+python -m utils.assistant.agent_server.reflexion_agent
+```
+
 
 ## Run Server
 
