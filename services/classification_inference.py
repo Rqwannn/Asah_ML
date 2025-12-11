@@ -290,7 +290,7 @@ class ClassificationService:
         ax3.set_title(f'Distribusi Prediksi\nHasil: {predicted_label}', 
                       fontsize=13, fontweight='bold', pad=15)
         
-        fig.suptitle('Analisis LIME: Pengaruh Setiap Fitur terhadap Prediksi Model', 
+        fig.suptitle('', 
                     fontsize=17, fontweight='bold', y=0.97)
         
         buffer = BytesIO()
