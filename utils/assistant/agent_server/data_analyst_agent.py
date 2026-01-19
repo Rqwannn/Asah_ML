@@ -17,11 +17,19 @@ from app.config import settings
 
 server = Server()
 
-model = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash",
+from langchain_openai import ChatOpenAI
+
+model = ChatOpenAI(
+    model="gpt-4o-mini", # atau "gpt-4o-mini"
     temperature=0.3,
     max_tokens=2000,
 )
+
+# model = ChatGoogleGenerativeAI(
+#     model="gemini-2.0-flash",
+#     temperature=0.3,
+#     max_tokens=2000,
+# )
 
 @server.agent()
 async def data_analyst_agent(
