@@ -30,9 +30,9 @@ async def initialize_cognee():
         
         # Set LLM config
         await cognee.config.set_llm_config({
-            "provider": "google",
-            "model": "gemini-2.0-flash",
-            "api_key": settings.GOOGLE_API_KEY,
+            "provider": "openai",
+            "model": "gpt-4o-mini",
+            "api_key": settings.OPENAI_API_KEY,
             "temperature": 0.3,
         })
         

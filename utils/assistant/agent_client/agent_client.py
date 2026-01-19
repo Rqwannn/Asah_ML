@@ -24,19 +24,27 @@ from utils.assistant.agent_client.data_analyst_agent import call_data_analyst_ag
 from utils.assistant.agent_client.learning_insight_agent import call_learning_insight_agent
 from utils.assistant.agent_client.reflexion_agent import call_reflexion_demo
 
-model = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash",
-    model_kwargs={"streaming": True},
-    temperature=0.2,
-    max_tokens=3000,
-    top_p=0.85,
-    top_k=20,
-    safety_settings={
-        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-    },
+# model = ChatGoogleGenerativeAI(
+#     model="gemini-2.0-flash",
+#     model_kwargs={"streaming": True},
+#     temperature=0.2,
+#     max_tokens=3000,
+#     top_p=0.85,
+#     top_k=20,
+#     safety_settings={
+#         HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+#         HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+#         HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+#         HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+#     },
+# )
+
+from langchain_openai import ChatOpenAI
+
+model = ChatOpenAI(
+    model="gpt-4o-mini", # atau "gpt-4o-mini"
+    temperature=0.3,
+    max_tokens=2000,
 )
 
 @tool

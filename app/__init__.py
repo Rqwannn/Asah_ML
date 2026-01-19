@@ -12,6 +12,7 @@ async def lifespan(app: FastAPI):
     load_dotenv()
 
     os.environ['GOOGLE_API_KEY']
+    os.environ['OPENAI_API_KEY']
     os.environ['LANCEDB_API_KEY']
     os.environ['COHERE_API_KEY']
 
